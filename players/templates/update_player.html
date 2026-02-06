@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{% static 'base_.css' %}">
+  <title>Update Player</title>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <img class="logo" src="{% static 'Ekota-logo.webp' %}" alt="Ekota FC">
+      <div class="brand">
+        <div class="brand-title">Ekota Football Club</div>
+        <div class="brand-subtitle">Club Management Portal</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <h1>Update Player</h1>
+    <p>Player ID: {{ player.id }}</p>
+
+    {% if messages %}
+      {% for message in messages %}
+        <p>{{ message }}</p>
+      {% endfor %}
+    {% endif %}
+
+    <form method="post">
+      {% csrf_token %}
+
+      <label>First Name</label><br>
+      <input type="text" name="first_name" value="{{ player.first_name }}"><br><br>
+
+      <label>Last Name</label><br>
+      <input type="text" name="last_name" value="{{ player.last_name }}"><br><br>
+
+      <label>Date of Birth</label><br>
+      <input type="date" name="date_of_birth" value="{{ player.date_of_birth|date:'Y-m-d' }}"><br><br>
+
+      <label>Position</label><br>
+      <select name="position">
+        <option value="">-- Select --</option>
+        <option value="GK" {% if player.position == "GK" %}selected{% endif %}>GK</option>
+        <option value="DEF" {% if player.position == "DEF" %}selected{% endif %}>DEF</option>
+        <option value="MID" {% if player.position == "MID" %}selected{% endif %}>MID</option>
+        <option value="FWD" {% if player.position == "FWD" %}selected{% endif %}>FWD</option>
+      </select><br><br>
+
+      <button type="submit" class="button">Save Changes</button>
+    </form>
+
+    <p>
+      <a class="button button-outline" href="{% url 'StaffPlayersHub' %}">
+        Back to Players
+      </a>
+    </p>
+  </div>
+
+</body>
+</html>

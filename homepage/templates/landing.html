@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{% static 'base_.css' %}">
+  <title>Ekota Football Club</title>
+</head>
+<body>
+  
+  <header class="topbar">
+    <div class="topbar-inner">
+      <img class="logo" src="{% static 'Ekota-logo.webp' %}" alt="Ekota FC">
+      <div class="brand">
+        <div class="brand-title">Ekota Football Club</div>
+        <div class="brand-subtitle">Club Management Portal</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="card">
+      <h1>Welcome</h1>
+      <p class="subtitle">Select your role to continue</p>
+
+      <div class="role-grid">
+        <div class="role-box">
+          <h2>Player</h2>
+          <p>View your individual profile, training schedule, and match information.</p>
+          <div class="actions">
+            <a class="button" href="{% url 'Login' %}?role=player">Login</a>
+          </div>
+        </div>
+
+        <div class="role-box">
+          <h2>Staff</h2>
+          <p>Manage players, training sessions, and club activity.</p>
+          <div class="actions">
+            <a class="button" href="{% url 'Login' %}?role=staff">Login</a>
+            <a class="button button-outline" href="{% url 'StaffRegister' %}?role=staff">Register</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

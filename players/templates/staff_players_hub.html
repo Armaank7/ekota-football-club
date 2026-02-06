@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{% static 'base_.css' %}">
+  <title>Manage Players</title>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <img class="logo" src="{% static 'Ekota-logo.webp' %}" alt="Ekota FC">
+      <div class="brand">
+        <div class="brand-title">Ekota Football Club</div>
+        <div class="brand-subtitle">Club Management Portal</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <h1>Players</h1>
+
+    {% if messages %}
+      {% for message in messages %}
+        <p>{{ message }}</p>
+      {% endfor %}
+    {% endif %}
+
+    <h2>Create Player</h2>
+    <form method="post">
+      {% csrf_token %}
+
+      <label>First Name</label><br>
+      <input type="text" name="first_name"><br><br>
+
+      <label>Last Name</label><br>
+      <input type="text" name="last_name"><br><br>
+
+      <label>Date of Birth</label><br>
+      <input type="date" name="date_of_birth"><br><br>
+
+      <label>Position</label><br>
+      <select name="position">
+        <option value="">-- Select --</option>
+        <option value="GK">GK</option>
+        <option value="DEF">DEF</option>
+        <option value="MID">MID</option>
+        <option value="FWD">FWD</option>
+      </select><br><br>
+
+      <button type="submit" class="button">Create</button>
+    </form>
+
+    <h2>Existing Players</h2>
+
+    {% if players %}
+      <ul>
+        {% for player in players %}
+          <li>
+            {{ player.id }} - {{ player.first_name }} {{ player.last_name }} - {{ player.position }}
+
+            <a class="button button-outline" href="{% url 'UpdatePlayer' player.id %}">Update</a>
+
+            <form method="post" style="display:inline;">
+              {% csrf_token %}
+              <input type="hidden" name="deletePlayerID" value="{{ player.id }}">
+              <button type="submit" class="button button-outline">Delete</button>
+
+            </form>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No players yet.</p>
+    {% endif %}
+
+    <p>
+      <a class="button button-outline" href="{% url 'StaffHomepage' %}">Back to Staff Homepage</a>
+    </p>
+  </div>
+
+</body>
+</html>
